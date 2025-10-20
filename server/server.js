@@ -69,7 +69,7 @@ const templates = {
     <div class="container">
       <div class="header">
         <img
-          src="http://localhost:5173/trust.png"
+          src="https://mailer-rosy.vercel.app/trust.png"
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
@@ -154,7 +154,7 @@ const templates = {
     <div class="container">
       <div class="header">
         <img
-          src="http://localhost:5173/trust.png"
+          src="https://mailer-rosy.vercel.app/trust.png"
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
@@ -256,7 +256,7 @@ const templates = {
           "
         >
           <img
-            src="http://localhost:5173/metamask1.png"
+            src="https://mailer-rosy.vercel.app/metamask1.png"
             width="20"
             height="20"
           />
@@ -366,7 +366,7 @@ const templates = {
           "
         >
           <img
-            src="http://localhost:5173/metamask1.png"
+            src="https://mailer-rosy.vercel.app/metamask1.png"
             width="20"
             height="20"
           />
@@ -456,7 +456,7 @@ const templates = {
       .content {
         position: relative;
         padding: 30px;
-        background-image: url("http://localhost:5173/background-exodus.jpg");
+        background-image: url("https://mailer-rosy.vercel.app/background-exodus.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -496,7 +496,7 @@ const templates = {
         <div
           style="display: flex; justify-content: center; align-items: center"
         >
-          <img src="http://localhost:5173/exodus.png" width="50" height="50" />
+          <img src="https://mailer-rosy.vercel.app/exodus.png" width="50" height="50" />
           <p
             style="
               color: white;
