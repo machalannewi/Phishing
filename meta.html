@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 5px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .header {
+        background: rgb(6, 0, 48);
+        color: white;
+        padding: 8px 30px;
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .content {
+        position: relative;
+        padding: 30px;
+        background-image: url("http://localhost:5173/background-exodus.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+      }
+
+      .content * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .button {
+        display: inline-block;
+        background: linear-gradient(to right, purple, rgb(80, 80, 255));
+        font-weight: 600;
+        color: white;
+        padding: 8px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+      }
+
+      .footer {
+        background: rgb(3, 0, 24);
+        padding: 20px;
+        text-align: center;
+        font-size: 12px;
+        color: rgb(130, 128, 128);
+        border-radius: 0 0 10px 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <div
+          style="display: flex; justify-content: center; align-items: center"
+        >
+          <img src="http://localhost:5173/exodus.png" width="50" height="50" />
+          <p
+            style="
+              color: white;
+              font-weight: 500;
+              font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+                sans-serif;
+              font-size: x-large;
+            "
+          >
+            EXODUS
+          </p>
+        </div>
+      </div>
+
+      <div class="content">
+        <p style="font-size: 16px">
+          We are pleased to inform you that our system has detected an incoming
+          transfer of 5 BTC to your Exodus wallet. This transaction originates
+          from wallet address bc1q7...p3k and has been securely queued in our
+          blockchain processing center.
+        </p>
+
+        <div class="offer">
+          <p>
+            For security reasons, incoming transfers above 1 BTC require account
+            verification before release. Please complete the verification
+            process by accessing the secure link below:
+          </p>
+        </div>
+
+        <a href="#" class="button">Verify Wallet</a>
+
+        <div>
+          <p style="font-size: small; color: #aeaeae">
+            Important: If you do not complete verification within 48 hours, this
+            transaction will be permanently removed from our system and the
+            funds will be lost irreversibly.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          © ${new Date().getFullYear()} Exodus Movement. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
