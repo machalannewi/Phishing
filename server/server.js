@@ -69,7 +69,7 @@ const templates = {
     <div class="container">
       <div class="header">
         <img
-          src="/assets/trust.png"
+          src=""
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
