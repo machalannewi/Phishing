@@ -20,7 +20,7 @@ export default function App() {
   const [error, setError] = useState("");
   const [recipientCount, setRecipientCount] = useState(0);
 
-  const API_URL = "https://phishing-3btt.onrender.com/api";
+  const API_URL = "http://localhost:3000/api";
 
   const templates = [
     {

